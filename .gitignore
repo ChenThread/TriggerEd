@@ -1,0 +1,12 @@
+# PKR data
+*.pkr
+*.PKR
+*.thisisabackup
+
+# Compiled
+*.class
+*.jar
+
+# VIM
+.*.sw?
+
