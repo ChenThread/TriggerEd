@@ -22,5 +22,10 @@ public abstract class TCommandNode extends TNode
 	{
 		// TODO!
 	}
+
+	public String getCommandString()
+	{
+		return "?!?";
+	}
 }
 

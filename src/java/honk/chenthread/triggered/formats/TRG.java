@@ -15,16 +15,6 @@ import java.util.List;
 */
 public class TRG
 {
-	public static class TPowrUp extends TNode {
-		public TPowrUp(ByteBuffer fp) {
-		}
-	}
-
-	public static class TCommandPoint extends TNode {
-		public TCommandPoint(ByteBuffer fp) {
-		}
-	}
-
 	public static class TSeedableBaddy extends TNode {
 		public TSeedableBaddy(ByteBuffer fp) {
 		}

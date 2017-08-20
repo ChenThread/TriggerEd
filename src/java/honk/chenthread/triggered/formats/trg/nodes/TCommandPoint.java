@@ -10,21 +10,24 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
-* TRG node type: AutoExec
+* TRG node type: CommandPoint
 */
 
-public class TAutoExec extends TCommandNode
+public class TCommandPoint extends TCommandNode
 {
-	public TAutoExec(ByteBuffer fp)
+	public TCommandPoint(ByteBuffer fp)
 	{
 		parseCommands(fp);
 	}
 
 	public String getParamString()
 	{
-		return getCommandString();
+		return String.format("!!! %s"
+			, getCommandString()
+		);
 	}
 }
+
 
 
 
