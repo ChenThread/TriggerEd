@@ -19,7 +19,7 @@ public class Main
 					, (trgbuf == null ? -1 : trgbuf.hashCode()));
 				TRG trg = new TRG(trgbuf);
 			}
-			if(true && fname.toLowerCase().endsWith(".psx")) {
+			if(false && fname.toLowerCase().endsWith(".psx")) {
 				ByteBuffer psxbuf = fc_pkr.readFile(fname);
 				System.out.printf("- \"%s\" %d\n", fname
 					, (psxbuf == null ? -1 : psxbuf.hashCode()));

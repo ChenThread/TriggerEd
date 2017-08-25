@@ -32,7 +32,7 @@ public abstract class TNode
 	//
 	public void pad16(ByteBuffer fp)
 	{
-		fp.position((fp.position()+0x3)&~0x3);
+		fp.position((fp.position()+0x1)&~0x1);
 	}
 
 	public void pad32(ByteBuffer fp)

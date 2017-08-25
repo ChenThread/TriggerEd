@@ -3,6 +3,7 @@ package honk.chenthread.triggered.formats.trg.nodes;
 
 import honk.chenthread.triggered.formats.trg.*;
 import honk.chenthread.triggered.formats.trg.nodes.commands.*;
+import static honk.chenthread.triggered.formats.trg.nodes.commands.TCAllCommands.*;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -20,12 +21,33 @@ public abstract class TCommandNode extends TNode
 
 	public void parseCommands(ByteBuffer fp)
 	{
-		// TODO!
+		while(true)
+		{
+			TCommand cmd = TCommand.parse(fp);
+			command_list.add(cmd);
+			if(cmd == null) { break; }
+			if(cmd instanceof TCEndCommandList) {
+				break;
+			}
+		}
 	}
 
 	public String getCommandString()
 	{
-		return "?!?";
+		String s = "";
+		for(int i = 0; i < this.command_list.size(); i++) {
+			if(i != 0) {
+				s += ";  ";
+			}
+
+			TCommand cmd = this.command_list.get(i);
+			if(cmd == null) {
+				s += "???";
+			} else {
+				s += cmd.toString();
+			}
+		}
+		return "["+s+"]";
 	}
 }
 
