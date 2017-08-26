@@ -30,17 +30,29 @@ public abstract class TNode
 	//
 	// Helpers
 	//
-	public void pad16(ByteBuffer fp)
+	public static void pad16(ByteBuffer fp)
 	{
 		fp.position((fp.position()+0x1)&~0x1);
 	}
 
-	public void pad32(ByteBuffer fp)
+	public static void pad32(ByteBuffer fp)
 	{
 		fp.position((fp.position()+0x3)&~0x3);
 	}
 
-	public String makeNodeString(short[] ref_list)
+	public static void padWrite16(ByteBuffer fp)
+	{
+		// TODO!
+		fp.position((fp.position()+0x1)&~0x1);
+	}
+
+	public static void padWrite32(ByteBuffer fp)
+	{
+		// TODO!
+		fp.position((fp.position()+0x3)&~0x3);
+	}
+
+	public static String makeNodeString(short[] ref_list)
 	{
 		String s = "";
 		s += "[";
@@ -52,6 +64,29 @@ public abstract class TNode
 		}
 		s += "]";
 		return s;
+	}
+
+	public static String readString(ByteBuffer fp)
+	{
+		String s = "";
+
+		while(true) {
+			int c = 0xFF&(int)fp.get();
+			if(c == 0) {
+				break;
+			}
+			s += (char)c;
+		}
+
+		return s;
+	}
+
+	public static void writeString(ByteBuffer fp, String s)
+	{
+		for(int i = 0; i < s.length(); i++) {
+			fp.put((byte)s.charAt(i));
+		}
+		fp.put((byte)0);
 	}
 }
 

@@ -20,11 +20,6 @@ public class TRG
 		}
 	}
 
-	public static class TRestart extends TNode {
-		public TRestart(ByteBuffer fp) {
-		}
-	}
-
 	public static class TBarrel extends TNode {
 		public TBarrel(ByteBuffer fp) {
 		}
@@ -47,11 +42,6 @@ public class TRG
 
 	public static class TGoalOb extends TNode {
 		public TGoalOb(ByteBuffer fp) {
-		}
-	}
-
-	public static class TAutoExec2 extends TNode {
-		public TAutoExec2(ByteBuffer fp) {
 		}
 	}
 

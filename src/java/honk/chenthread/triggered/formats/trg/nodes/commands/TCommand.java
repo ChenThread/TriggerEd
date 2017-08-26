@@ -39,6 +39,8 @@ public abstract class TCommand
 
 			case 126: return new TCSpoolIn(fp);
 
+			case 128: return new TCSpoolEnv(fp);
+
 			case 131: return new TCBackgroundOn(fp);
 			case 132: return new TCBackgroundOff(fp);
 
@@ -57,6 +59,10 @@ public abstract class TCommand
 
 			case 157: return new TCSetReverbType(fp);
 			case 158: return new TCEndLevel();
+
+			case 166: return new TCSetOTPushback(fp);
+
+			case 169: return new TCSetOTPushback2(fp);
 
 			case 171: return new TCBackgroundCreate(fp);
 

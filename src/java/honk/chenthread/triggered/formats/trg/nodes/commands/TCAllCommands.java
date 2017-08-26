@@ -72,6 +72,20 @@ public class TCAllCommands
 		}
 	} // 126
 
+	public static class TCSpoolEnv extends TCommand {
+		public String fname;
+
+		public TCSpoolEnv(ByteBuffer fp) {
+			this.fname = this.readString(fp);
+		}
+		protected void writeArgsTo(ByteBuffer fp) {
+			this.writeString(fp, this.fname);
+		}
+		protected String getNodeArgString() {
+			return String.format("\"%s\"", fname);
+		}
+	} // 128
+
 	public static class TCBackgroundOn extends TCommand {
 		public short unk1;
 
@@ -133,6 +147,7 @@ public class TCAllCommands
 		public ArrayList<int[]> boxes = new ArrayList<int[]>();
 
 		public TCSetVisibilityInBox(ByteBuffer fp) {
+			//System.out.printf("%08X\n", fp.position());
 			this.f1 = fp.getShort();
 			this.f2 = fp.getShort();
 
@@ -140,11 +155,12 @@ public class TCAllCommands
 			// I'm just trying to get the damn thing to parse
 			// so I can get to the important stuff
 			if(f2 != 0 && f2 != 1) {
-				fp.position(fp.position()-2);
+				fp.position(fp.position()-4);
 				f2 = 2;
 			}
-			pad32(fp);
-			while(true) {
+
+			while(fp.getShort(fp.position()) != 255) {
+				pad32(fp);
 				int va = 0xFFFF&(int)fp.getShort();
 				if(va == 0x00FF) {
 					break;
@@ -156,22 +172,25 @@ public class TCAllCommands
 				int vx2 = fp.getInt();
 				int vy2 = fp.getInt();
 				int vz2 = fp.getInt();
+
 				boxes.add(new int[]{
 					vx1, vy1, vz1,
 					vx2, vy2, vz2,
 				});
 			}
+			fp.getShort(); // skip the terminator entry
 		}
 		protected void writeArgsTo(ByteBuffer fp) {
 			fp.putShort(this.f1);
 			fp.putShort(this.f2);
-			padWrite32(fp);
 			for(int i = 0; i < boxes.size(); i++) {
+				padWrite32(fp);
 				int[] box = boxes.get(i);
 				for(int j = 0; j < 6; j++) {
 					fp.putInt(box[j]);
 				}
 			}
+			fp.putShort((short)255);
 		}
 		protected String getNodeArgString() {
 			String ns = "";
@@ -256,6 +275,34 @@ public class TCAllCommands
 	} // 157
 
 	public static class TCEndLevel extends TCommand {} // 158
+
+	public static class TCSetOTPushback extends TCommand {
+		public short unk1;
+
+		public TCSetOTPushback(ByteBuffer fp) {
+			this.unk1 = fp.getShort();
+		}
+		protected void writeArgsTo(ByteBuffer fp) {
+			fp.putShort(this.unk1);
+		}
+		protected String getNodeArgString() {
+			return String.format("0x%04X", unk1);
+		}
+	} // 166
+
+	public static class TCSetOTPushback2 extends TCommand {
+		public short unk1;
+
+		public TCSetOTPushback2(ByteBuffer fp) {
+			this.unk1 = fp.getShort();
+		}
+		protected void writeArgsTo(ByteBuffer fp) {
+			fp.putShort(this.unk1);
+		}
+		protected String getNodeArgString() {
+			return String.format("0x%04X", unk1);
+		}
+	} // 169
 
 	public static class TCBackgroundCreate extends TCommand {
 		public int fhash;
