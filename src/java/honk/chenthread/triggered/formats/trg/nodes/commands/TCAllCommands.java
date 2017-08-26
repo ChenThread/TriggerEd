@@ -16,6 +16,42 @@ import java.util.List;
 
 public class TCAllCommands
 {
+	public static class TCSetCheatRestarts extends TCommand {
+		public ArrayList<String> names = new ArrayList<String>();
+
+		public TCSetCheatRestarts(ByteBuffer fp) {
+			//System.out.printf("%08X\n", fp.position());
+			while(true) {
+				int oldpos = fp.position();
+				String name = this.readString(fp);
+				if(name == "") {
+					break;
+				}
+				if(name.length() == 1) {
+					fp.position(oldpos);
+					break;
+				}
+				pad16(fp);
+				this.names.add(name);
+			}
+			pad16(fp);
+		}
+		protected void writeArgsTo(ByteBuffer fp) {
+			throw new RuntimeException("TODO!");
+		}
+		protected String getNodeArgString() {
+			String s = "[";
+			for(int i = 0; i < names.size(); i++) {
+				if(i != 0) {
+					s += ", ";
+				}
+				s += "\""+names.get(i)+"\"";
+			}
+			s += "]";
+			return s;
+		}
+	} // 2
+
 	public static class TCSendPulse extends TCommand {} // 3
 	public static class TCSendActivate extends TCommand {} // 4
 	public static class TCSendSuspend extends TCommand {} // 5
@@ -86,6 +122,22 @@ public class TCAllCommands
 		}
 	} // 128
 
+	public static class TCSetCamAngle extends TCommand {
+		public short a1, a2;
+
+		public TCSetCamAngle(ByteBuffer fp) {
+			this.a1 = fp.getShort();
+			this.a2 = fp.getShort();
+		}
+		protected void writeArgsTo(ByteBuffer fp) {
+			fp.putShort(this.a1);
+			fp.putShort(this.a2);
+		}
+		protected String getNodeArgString() {
+			return String.format("%d, %d", a1, a2);
+		}
+	} // 130
+
 	public static class TCBackgroundOn extends TCommand {
 		public short unk1;
 
@@ -127,6 +179,23 @@ public class TCAllCommands
 			return String.format("%d", unk1);
 		}
 	} // 134
+
+	public static class TCSetCamDistXZ extends TCommand {
+		public short unk1;
+		public short unk2;
+
+		public TCSetCamDistXZ(ByteBuffer fp) {
+			this.unk1 = fp.getShort();
+			this.unk2 = fp.getShort();
+		}
+		protected void writeArgsTo(ByteBuffer fp) {
+			fp.putShort(this.unk1);
+			fp.putShort(this.unk2);
+		}
+		protected String getNodeArgString() {
+			return String.format("%d, %d", unk1, unk2);
+		}
+	} // 135
 
 	public static class TCSetRestart extends TCommand {
 		public String nodestr;
@@ -228,6 +297,74 @@ public class TCAllCommands
 		}
 	} // 142
 
+	public static class TCSetCamDistY extends TCommand {
+		public short unk1;
+		public short unk2;
+
+		public TCSetCamDistY(ByteBuffer fp) {
+			this.unk1 = fp.getShort();
+			this.unk2 = fp.getShort();
+		}
+		protected void writeArgsTo(ByteBuffer fp) {
+			fp.putShort(this.unk1);
+			fp.putShort(this.unk2);
+		}
+		protected String getNodeArgString() {
+			return String.format("%d, %d", unk1, unk2);
+		}
+	} // 143
+
+	public static class TCSetCamOffsetX extends TCommand {
+		public short unk1;
+		public short unk2;
+
+		public TCSetCamOffsetX(ByteBuffer fp) {
+			this.unk1 = fp.getShort();
+			this.unk2 = fp.getShort();
+		}
+		protected void writeArgsTo(ByteBuffer fp) {
+			fp.putShort(this.unk1);
+			fp.putShort(this.unk2);
+		}
+		protected String getNodeArgString() {
+			return String.format("%d, %d", unk1, unk2);
+		}
+	} // 144
+
+	public static class TCSetCamOffsetY extends TCommand {
+		public short unk1;
+		public short unk2;
+
+		public TCSetCamOffsetY(ByteBuffer fp) {
+			this.unk1 = fp.getShort();
+			this.unk2 = fp.getShort();
+		}
+		protected void writeArgsTo(ByteBuffer fp) {
+			fp.putShort(this.unk1);
+			fp.putShort(this.unk2);
+		}
+		protected String getNodeArgString() {
+			return String.format("%d, %d", unk1, unk2);
+		}
+	} // 145
+
+	public static class TCSetCamOffsetZ extends TCommand {
+		public short unk1;
+		public short unk2;
+
+		public TCSetCamOffsetZ(ByteBuffer fp) {
+			this.unk1 = fp.getShort();
+			this.unk2 = fp.getShort();
+		}
+		protected void writeArgsTo(ByteBuffer fp) {
+			fp.putShort(this.unk1);
+			fp.putShort(this.unk2);
+		}
+		protected String getNodeArgString() {
+			return String.format("%d, %d", unk1, unk2);
+		}
+	} // 146
+
 	public static class TCSetGameLevel extends TCommand {
 		public short unk1;
 
@@ -260,6 +397,34 @@ public class TCAllCommands
 
 	public static class TCKillBruce extends TCommand {} // 152
 
+	public static class TCSetCamColijSide extends TCommand {
+		public short unk1;
+
+		public TCSetCamColijSide(ByteBuffer fp) {
+			this.unk1 = fp.getShort();
+		}
+		protected void writeArgsTo(ByteBuffer fp) {
+			fp.putShort(this.unk1);
+		}
+		protected String getNodeArgString() {
+			return String.format("%d", unk1);
+		}
+	} // 153
+
+	public static class TCMIDIFadeIn extends TCommand {
+		public short unk1;
+
+		public TCMIDIFadeIn(ByteBuffer fp) {
+			this.unk1 = fp.getShort();
+		}
+		protected void writeArgsTo(ByteBuffer fp) {
+			fp.putShort(this.unk1);
+		}
+		protected String getNodeArgString() {
+			return String.format("%d", unk1);
+		}
+	} // 155
+
 	public static class TCSetReverbType extends TCommand {
 		public short unk1;
 
@@ -289,6 +454,23 @@ public class TCAllCommands
 			return String.format("0x%04X", unk1);
 		}
 	} // 166
+
+	public static class TCSetCamZoom extends TCommand {
+		public short unk1;
+		public short unk2;
+
+		public TCSetCamZoom(ByteBuffer fp) {
+			this.unk1 = fp.getShort();
+			this.unk2 = fp.getShort();
+		}
+		protected void writeArgsTo(ByteBuffer fp) {
+			fp.putShort(this.unk1);
+			fp.putShort(this.unk2);
+		}
+		protected String getNodeArgString() {
+			return String.format("%d, %d", unk1, unk2);
+		}
+	} // 167
 
 	public static class TCSetOTPushback2 extends TCommand {
 		public short unk1;

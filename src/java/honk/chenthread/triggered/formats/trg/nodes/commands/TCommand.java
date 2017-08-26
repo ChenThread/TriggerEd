@@ -26,6 +26,7 @@ public abstract class TCommand
 
 		switch(typ)
 		{
+			case 2: return new TCSetCheatRestarts(fp);
 			case 3: return new TCSendPulse();
 			case 4: return new TCSendActivate();
 			case 5: return new TCSendSuspend();
@@ -41,14 +42,20 @@ public abstract class TCommand
 
 			case 128: return new TCSpoolEnv(fp);
 
+			case 130: return new TCSetCamAngle(fp);
 			case 131: return new TCBackgroundOn(fp);
 			case 132: return new TCBackgroundOff(fp);
 
 			case 134: return new TCSetInitialPulses(fp);
+			case 135: return new TCSetCamDistXZ(fp);
 
 			case 140: return new TCSetRestart(fp);
 			case 141: return new TCSetVisibilityInBox(fp);
 			case 142: return new TCSetObjFile(fp);
+			case 143: return new TCSetCamDistY(fp);
+			case 144: return new TCSetCamOffsetX(fp);
+			case 145: return new TCSetCamOffsetY(fp);
+			case 146: return new TCSetCamOffsetZ(fp);
 
 			case 147: return new TCSetGameLevel(fp);
 
@@ -56,11 +63,15 @@ public abstract class TCommand
 
 			case 151: return new TCSetDualBufferSize(fp);
 			case 152: return new TCKillBruce();
+			case 153: return new TCSetCamColijSide(fp);
+
+			case 155: return new TCMIDIFadeIn(fp);
 
 			case 157: return new TCSetReverbType(fp);
 			case 158: return new TCEndLevel();
 
 			case 166: return new TCSetOTPushback(fp);
+			case 167: return new TCSetCamZoom(fp);
 
 			case 169: return new TCSetOTPushback2(fp);
 
